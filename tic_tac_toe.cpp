@@ -15,18 +15,18 @@ public:
     {
         points = 0;
         for (int i = 0; i < 9; i++)
-            table[i] = 'e';
+            table[i] = '1' + i;
     }
     void resetGame()
     {
         points = 0;
         for (int i = 0; i < 9; i++)
-            table[i] = 'e';
+            table[i] = '1' + i;
     }
     void resetTable()
     {
         for (int i = 0; i < 9; i++)
-            table[i] = 'e';
+            table[i] = '1' + i;
     }
     void display()
     {
@@ -38,62 +38,37 @@ public:
     void check()
     {
         // =====================================
-        // to check for colums
-        if (table[0] == table[3] && table[0] == table[6])
-        {
-            if (table[0] == USER)
-            {
-                points++;
-                resetTable();
-            }
-            else if (table[0] == AI)
-            {
-                points--;
-                resetTable();
-            }
-            return;
-        }
-
-        else if (table[1] == table[4] && table[1] == table[7])
-        {
-            if (table[1] == USER)
-            {
-                points++;
-                resetTable();
-            }
-            else if (table[1] == AI)
-            {
-                points--;
-                resetTable();
-            }
-            return;
-        }
-
-        else if (table[2] == table[5] && table[2] == table[8])
-        {
-            if (table[2] == USER)
-            {
-                points++;
-                resetTable();
-            }
-            else if (table[2] == AI)
-            {
-                points--;
-                resetTable();
-            }
-            return;
-        }
-        // =====================================
-        // to check for rows
+        // to check for colums and rows
         for (int i = 0; i < 3; i++)
             if (table[i] == table[i + 1] && table[i] == table[i + 2])
             {
                 if (table[i] == USER)
+                {
                     points++;
+                    resetTable();
+                }
                 else if (table[i] == AI)
+                {
                     points--;
+                    resetTable();
+                }
                 return;
-            }
+            } // for rows
+            else if (table[i] == table[i + 3] && table[i] == table[i + 6])
+            {
+                if (table[i] == USER)
+                {
+                    points++;
+                    resetTable();
+                }
+                else if (table[i] == AI)
+                {
+                    points--;
+                    resetTable();
+                }
+                return;
+            } // for columns
+        // =====================================
 
         // to check for diagonals
         if (table[0] == table[4] && table[0] == table[8])
@@ -136,26 +111,22 @@ public:
         cout << "Which grid you choose (1 - 9): ";
         cin >> n;
         n--;
-        if (table[n] == 'e')
+        if (n >= 0 && n < 9 && table[n] != USER && table[n] != AI) // to check if the grid is clear from marks
             table[n] = USER;
-
         else
         {
-            cout << "Cannot place mark here!";
-            while (1)
-            {
-                int n = rand() % 9;
-                if (table[n] == 'e')
-                {
-                    table[n] = USER;
-                    return;
-                }
-            }
+            cout << "Cannot place mark here!" << endl;
+            return;
         }
+        aiMove();
+    }
+    
+    void aiMove()
+    {
         while (1)
         {
             int n = rand() % 9;
-            if (table[n] == 'e')
+            if (table[n] != USER && table[n] != AI)
             {
                 table[n] = AI;
                 return;
