@@ -39,7 +39,8 @@ public:
     {
         // =====================================
         // to check for colums and rows
-        for (int i = 0; i < 3; i++)
+
+        for (int i = 0; i <= 6; i += 3)
             if (table[i] == table[i + 1] && table[i] == table[i + 2])
             {
                 if (table[i] == USER)
@@ -54,7 +55,9 @@ public:
                 }
                 return;
             } // for rows
-            else if (table[i] == table[i + 3] && table[i] == table[i + 6])
+
+        for (int i = 0; i < 3; i++)
+            if (table[i] == table[i + 3] && table[i] == table[i + 6])
             {
                 if (table[i] == USER)
                 {
@@ -120,7 +123,7 @@ public:
         }
         aiMove();
     }
-    
+
     void aiMove()
     {
         while (1)
